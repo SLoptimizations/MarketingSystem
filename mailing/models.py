@@ -36,6 +36,7 @@ class Email(models.Model):
     def __str__(self):
         return self.header
 
+
 class Subscriber(models.Model):
     # CAMPAIGN_LIST = Campaign.objects.values('name')
     campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE)
