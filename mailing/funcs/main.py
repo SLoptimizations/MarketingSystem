@@ -10,7 +10,7 @@ headers = {
 }
 
 
-def send_mass_html_mail(datatuple, fail_silently=False, user=None, password=None,
+def send_mass_html_mail(datatuple, context=None, fail_silently=False, user=None, password=None,
                         connection=None):
     """
     Given a datatuple of (Email, recipient_list),
@@ -34,7 +34,7 @@ def send_mass_html_mail(datatuple, fail_silently=False, user=None, password=None
                                          recipient,
                                          headers=headers)
 
-        html_content = get_template(f"{email.html}.html").render(context={'facebook': 'fachebook'})
+        html_content = get_template(f"{email.html}.html").render(context=context)
         # new_html_email_text = adapt_html(
         #     html_content, extra_metadata={"customer_id": 1},
         #     click_tracking=True, open_tracking=True)

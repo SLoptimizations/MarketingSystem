@@ -4,6 +4,7 @@ from .funcs.main import send_mass_html_mail
 from .models import Email
 from ipware import get_client_ip
 import base64
+import random
 # Create your views here.
 
 
@@ -13,8 +14,8 @@ class RegistrationView(View):
         new_email = Email.objects.all()
         message1 = (new_email[0], ['SLoptimizations@gmail.com'])
         message2 = (new_email[0], ['SLoptimizations@gmail.com'])
-
-        send_mass_html_mail((message1, message2))
+        pix_id = random.randint(100, 999)
+        send_mass_html_mail((message1, message2), context={'pix_id':pix_id})
 
         return render(request, 'tanku.html')
 
