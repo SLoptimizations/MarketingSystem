@@ -1,9 +1,11 @@
 from django.db import models
 from django.core.validators import EmailValidator
 from taggit.managers import TaggableManager
+import datetime
+from django.urls import reverse
 
 # Create your models here.
-
+# TODO add pixel class
 
 class Campaign(models.Model):
     name = models.CharField(max_length=60, blank=False)
@@ -17,6 +19,11 @@ class Campaign(models.Model):
     def __str__(self):
         return self.name
 
+    def get_absolute_url(self):
+        return reverse("mailing:register", kwargs={'campaign_pk': self.pk})
+
+
+
 
 class Email(models.Model):
     STATUS_OPTIONS = (
@@ -28,29 +35,30 @@ class Email(models.Model):
     header = models.CharField(max_length=60, blank=False)
     text = models.TextField()
     html = models.CharField(max_length=60)
-    # delay = models.DurationField(default=)
+    # delay = models.DurationField(default=datetime.timedelta(days=0, hours=0))
     delay_H = models.IntegerField(default=0)
-    index = models.IntegerField(default=0)
+    index = models.PositiveIntegerField(default=None, null=True)
     status = models.CharField(max_length=2, choices=STATUS_OPTIONS, default=0)
-
-    def __str__(self):
-        return self.header
-
-
-class Subscriber(models.Model):
-    # CAMPAIGN_LIST = Campaign.objects.values('name')
-    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE)
-    name = models.CharField(max_length=60, blank=False)
-    email = models.EmailField(max_length=100, blank=False, validators=[EmailValidator])
-    unsubscribe = models.BooleanField(default=0)
-    # url_id = models.CharField(max_length=7, default='', blank=True)
-    # ip = models.CharField(max_length=16, default='', blank=True)# InetAddressField()
     sent = models.IntegerField(default=0)
     opened = models.IntegerField(default=0)
     clicked = models.IntegerField(default=0)
 
-    next_email_index = models.ForeignKey(Email, on_delete=models.CASCADE)
-    send_email_date = models.DateField()
+    def __str__(self):
+        return str(self.index)
+
+
+class Subscriber(models.Model):
+    campaign = models.ForeignKey(Campaign, on_delete=models.CASCADE)
+    name = models.CharField(max_length=60, blank=False)
+    email = models.EmailField(max_length=100, blank=False, validators=[EmailValidator])
+    unsubscribe = models.BooleanField(default=0)
+    ip = models.CharField(max_length=16, default='', blank=True)# InetAddressField()
+    sent = models.IntegerField(default=0)
+    opened = models.IntegerField(default=0)
+    clicked = models.IntegerField(default=0)
+
+    next_email_index = models.PositiveIntegerField(default=0)
+    send_email_date = models.DateField(null=True)
 
     def __str__(self):
         return self.name

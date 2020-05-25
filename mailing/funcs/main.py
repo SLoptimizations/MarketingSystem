@@ -35,9 +35,6 @@ def send_mass_html_mail(datatuple, context=None, fail_silently=False, user=None,
                                          headers=headers)
 
         html_content = get_template(f"{email.html}.html").render(context=context)
-        # new_html_email_text = adapt_html(
-        #     html_content, extra_metadata={"customer_id": 1},
-        #     click_tracking=True, open_tracking=True)
         message.attach_alternative(html_content, 'text/html')
         messages.append(message)
         print('success')

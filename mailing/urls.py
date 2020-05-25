@@ -4,6 +4,8 @@ from mailing import views
 app_name = 'mailing'
 
 urlpatterns = [
-    path('', views.RegistrationView.as_view(), name='index'),
-    path('pixel/<str:pixel>.gif/', views.PixelView.as_view(), name='pixel'),
+
+    path('pixel/open/pixel.gif/', views.PixelView.as_view(), name='pixel'),
+    path('thanks/', views.thanks_view, name='thanks'),
+    path('<str:campaign_pk>/', views.RegistrationView.as_view(), name='register'),
 ]
