@@ -62,7 +62,8 @@ class Subscriber(models.Model):
     opened = models.IntegerField(default=0)
     clicked = models.IntegerField(default=0)
 
-    next_email_index = models.PositiveIntegerField(default=0, null=True)
+    next_email = models.ForeignKey(Email, on_delete=models.CASCADE, null= True)
+    # next_email_index = models.PositiveIntegerField(default=0, null=True)
     send_email_date = models.DateField(null=True)
 
     def __str__(self):

@@ -14,10 +14,12 @@ def handel_mailing(subscriber, index=1, extra_context={}):
     :param index: the place of the email in the sending order. default=1 and not 0 in favor of 'zero day' email
     :return: sets email sending data. if delay_H == 0 sending mail instantly
     """
-    subscriber.next_email_index = index
-    subscriber.save()
+    # subscriber.next_email_index = index
+    # subscriber.save()
 
-    email = Email.objects.get(campaign=subscriber.campaign, index=subscriber.next_email_index)
+    email = Email.objects.get(campaign=subscriber.campaign, index=index)
+    # subscriber.next_email_index = index
+    # subscriber.save()
     context = {'email_pk': email.pk, 'subscriber_pk': subscriber.pk}
     context.update(extra_context)
     html = get_template(f"{email.html}.html").render(context=context)
@@ -33,8 +35,13 @@ def handel_mailing(subscriber, index=1, extra_context={}):
         email.sent += 1
         email.save()
         subscriber.sent += 1
-        subscriber.next_email_index = index + 1
+        # subscriber.next_email_index = index + 1
 
+        # TODO check if no more emails
+        # set next email
+        email = Email.objects.get(campaign=subscriber.campaign, index=index+1)
+
+    subscriber.next_email = email
     subscriber.send_email_date = datetime.datetime.now() + timedelta(hours=email.delay_H)
     subscriber.save()
 
@@ -79,15 +86,16 @@ def send_mass_html_mail(datatuple, context=None, fail_silently=False, user=None,
 
 
 def send_emails():
-    # campaigns = Campaign.objects.filter(status='1')
     subscribers = Subscriber.objects.filter(unsubscribe=0, send_email_date=datetime.date.today())
-    emails_data = subscribers.values_list('campaign_id', 'next_email_index').distinct()
+    emails_data = list(Subscriber.objects.values_list('next_email',flat=True))
+    emails = Email.objects.filter(pk__in=emails_data)
+    datatuple = ()
+    for email in emails:
+        recipient_list = list(subscribers.filter(next_email=email).values_list('email', flat=True))
+        datatuple += ((email, recipient_list),)
 
-    # emails = Email.objects.filter(campaign__status='1', status='1')
-    # emails = Email.objects.extra(where=["('campaign_id','index') in %s"],params=[tuple(emails_data)])
-    for campaign_id, index in emails_data:
-        email = Email.objects.filter(campaign_id=campaign_id, index=index, status='1')
-        subs = subscribers.filter()
+    send_mass_html_mail(datatuple)
+
 
 
 send_emails()
