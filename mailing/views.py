@@ -1,6 +1,6 @@
 from django.shortcuts import render, HttpResponse
 from django.views.generic import CreateView, View, FormView
-from .funcs.main import send_mass_html_mail
+from .funcs.funcs import send_mass_html_mail
 from .models import Email, Subscriber, Campaign
 from .forms import SubscriberForm
 from ipware import get_client_ip
@@ -41,6 +41,7 @@ class RegistrationView(FormView):
         handel_mailing(subscriber)
         return super().form_valid(form)
 
+
 # TODO insert data to pixel
 class PixelView(View):
 
@@ -57,7 +58,7 @@ class PixelView(View):
 
         ip, is_routable = get_client_ip(request)
         if ip is None:
-            print(" Unable to get the client's IP address")
+            print("Unable to get the client's IP address")
         else:
             print(f"We got the client's IP address: {ip}")
 

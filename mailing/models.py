@@ -8,10 +8,15 @@ from django.urls import reverse
 # TODO add pixel class
 
 class Campaign(models.Model):
+    STATUS_OPTIONS = (
+        ('1', 'on'),
+        ('0', 'of'),
+    )
     name = models.CharField(max_length=60, blank=False)
     sender_name = models.CharField(max_length=60, blank=False)
     sender_email = models.EmailField(max_length=100, blank=False, validators=[EmailValidator])
     tags = TaggableManager()
+    status = models.CharField(max_length=2, choices=STATUS_OPTIONS, default=0)
     unsubscribed = models.IntegerField(default=0)
     sum_sent = models.IntegerField(default=0)
     sum_opened = models.IntegerField(default=0)
@@ -44,7 +49,7 @@ class Email(models.Model):
     clicked = models.IntegerField(default=0)
 
     def __str__(self):
-        return str(self.index)
+        return f"{str(self.index)}-{self.header}"
 
 
 class Subscriber(models.Model):
@@ -57,7 +62,7 @@ class Subscriber(models.Model):
     opened = models.IntegerField(default=0)
     clicked = models.IntegerField(default=0)
 
-    next_email_index = models.PositiveIntegerField(default=0)
+    next_email_index = models.PositiveIntegerField(default=0, null=True)
     send_email_date = models.DateField(null=True)
 
     def __str__(self):
