@@ -7,7 +7,7 @@ from mailing.models import Email, Campaign, Subscriber
 import datetime
 
 
-# TODO add try
+# TODO add try , maybe add to subscriber model class
 def handel_mailing(subscriber, index=1, extra_context={}):
     """
     :param subscriber:
@@ -72,9 +72,10 @@ def send_mass_html_mail(datatuple, context=None, fail_silently=False, user=None,
 
     messages = []
     for email, recipient in datatuple:
+        sender = f'{email.campaign.sender_name}<{email.campaign.sender_email}>'
         message = EmailMultiAlternatives(email.header,
                                          email.text,
-                                         email.campaign.sender_email,
+                                         sender,
                                          recipient,
                                          headers=headers)
 
@@ -85,9 +86,14 @@ def send_mass_html_mail(datatuple, context=None, fail_silently=False, user=None,
     return connection.send_messages(messages)
 
 
+# TODO
 def send_emails():
+    """
+    Sends all scheduled email
+
+    """
     subscribers = Subscriber.objects.filter(unsubscribe=0, send_email_date=datetime.date.today())
-    emails_data = list(Subscriber.objects.values_list('next_email',flat=True))
+    emails_data = list(Subscriber.objects.values_list('next_email', flat=True))
     emails = Email.objects.filter(pk__in=emails_data)
     datatuple = ()
     for email in emails:
@@ -98,4 +104,4 @@ def send_emails():
 
 
 
-send_emails()
+# send_emails()

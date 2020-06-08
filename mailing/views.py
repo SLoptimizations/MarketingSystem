@@ -1,5 +1,5 @@
 from django.shortcuts import render, HttpResponse
-from django.views.generic import CreateView, View, FormView
+from django.views.generic import CreateView, View, FormView, TemplateView
 from .funcs.funcs import send_mass_html_mail
 from .models import Email, Subscriber, Campaign
 from .forms import SubscriberForm
@@ -15,6 +15,8 @@ from .funcs.funcs import handel_mailing
 def thanks_view(request):
     return render(request, 'thanks.html')
 
+class ThanksView(TemplateView):
+    template_name = 'thanks.html'
 
 class RegistrationView(FormView):
     template_name = 'index.html'
@@ -22,22 +24,17 @@ class RegistrationView(FormView):
     success_url = '/thanks/'
 
     # def get(self, request, *args, **kwargs):
-    #     # email_pk = kwargs['email_pk']
-    #     email_pk = '1'
-    #     new_email = Email.objects.all()
-    #     message1 = (new_email[0], ['SLoptimizations@gmail.com'])
-    #     message2 = (new_email[0], ['SLoptimizations@gmail.com'])
-    #     pix_pk = random.randint(100, 999)
-    #     send_mass_html_mail((message1, message2),
-    #                         context={'email_pk': new_email[0].pk, 'pix_pk': pix_pk, 'user_pk': '1'})
-    #
-    #     return render(request, 'thanks.html')
+    #     campagin = Campaign.objects.get(pk=self.kwargs['campaign_pk'])
+    #     self.template_name = Campaign
+
 
     def form_valid(self, form):
         campagin = Campaign.objects.get(pk=self.kwargs['campaign_pk'])
         subscriber = form.save(commit=False)
         subscriber.campaign = campagin
         subscriber.save()
+        campagin.subscribers += 1
+        campagin.save()
         handel_mailing(subscriber)
         return super().form_valid(form)
 
