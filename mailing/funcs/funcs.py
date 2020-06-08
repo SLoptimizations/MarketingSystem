@@ -6,6 +6,13 @@ from django.core.mail import get_connection, EmailMultiAlternatives
 from mailing.models import Email, Campaign, Subscriber
 import datetime
 
+import pytracking
+from pytracking.html import adapt_html
+
+
+main_site = 'https://6f4ca8b1d675.ngrok.io/'
+
+
 
 # TODO add try , maybe add to subscriber model class
 def handel_mailing(subscriber, index=1, extra_context={}):
@@ -73,16 +80,22 @@ def send_mass_html_mail(datatuple, context=None, fail_silently=False, user=None,
     messages = []
     for email, recipient in datatuple:
         sender = f'{email.campaign.sender_name}<{email.campaign.sender_email}>'
-        message = EmailMultiAlternatives(email.header,
-                                         email.text,
-                                         sender,
-                                         recipient,
-                                         headers=headers)
 
-        html_content = get_template(f"{email.html}.html").render(context=context)
-        message.attach_alternative(html_content, 'text/html')
-        messages.append(message)
-        print('success')
+        for pk, email_adr in recipient:
+            message = EmailMultiAlternatives(email.header,
+                                             email.text,
+                                             sender,
+                                             [email_adr],
+                                             headers=headers)
+
+            html_content = get_template(f"{email.html}.html").render(context=context)
+            html_email_text = "..."
+            new_html_email_text = adapt_html(
+                html_content, extra_metadata={"customer_id": pk,"email_pk": email.pk},
+                click_tracking=True, open_tracking=True, base_open_tracking_url=f'{main_site}pixel/open/', base_click_tracking_url=f'{main_site}pixel/click/')
+            message.attach_alternative(new_html_email_text, 'text/html')
+            messages.append(message)
+    print('success')
     return connection.send_messages(messages)
 
 
@@ -97,11 +110,16 @@ def send_emails():
     emails = Email.objects.filter(pk__in=emails_data)
     datatuple = ()
     for email in emails:
-        recipient_list = list(subscribers.filter(next_email=email).values_list('email', flat=True))
-        datatuple += ((email, recipient_list),)
+        recipient_tuple = list(subscribers.filter(next_email=email).values_list('pk', 'email'))
+        datatuple += ((email, recipient_tuple),)
 
     send_mass_html_mail(datatuple)
 
 
 
 # send_emails()
+
+# open_tracking_url = pytracking.get_open_tracking_url(
+#     {"customer_id": 1}, base_open_tracking_url= f"{main_site}pixel/open/",
+#     webhook_url="http://requestb.in/123", include_webhook_url=True)
+# print(open_tracking_url)
