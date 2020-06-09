@@ -14,5 +14,6 @@ urlpatterns = [
     # path('pixel/click/', views.MyOpenTrackingView.as_view(), name='pixel'),
     path('pixel/webhook/', views.PixelView.as_view(), name='pixel_webhook'),
     path('thanks/', views.thanks_view, name='thanks'),
+    path('unsubscribe/<subscriber_pk>/', views.UnsubscribeView.as_view(), name='unsubscribe'),
     path('<str:campaign_pk>/', views.RegistrationView.as_view(), name='register'),
 ]

@@ -162,3 +162,22 @@ class MyClickTrackingView(ClickTrackingView):
         # settings. You can return your own Configuration object here if
         # you do not want to use Django settings.
         return Configuration()
+
+
+class UnsubscribeView(View):
+
+    def get(self, request, *args, **kwargs):
+        return render(request, 'unsubscribe.html')
+
+    def post(self, request, *args, **kwargs):
+        data = request.POST
+        if data.get('yes'):
+            subscriber = Subscriber.objects.get(pk=kwargs['subscriber_pk'])
+            subscriber.unsubscribe = '1'
+            subscriber.save()
+            text = "You are now unsubscribed."
+
+        else:
+            text = "You are still subscribed. have a grate day! "
+
+        return render(request, 'unsubscribe_thanks.html', context={'text': text})

@@ -10,7 +10,7 @@ import pytracking
 from pytracking.html import adapt_html
 
 
-main_site = 'https://6f4ca8b1d675.ngrok.io/'
+main_site = ' https://15135e24bb9c.ngrok.io/'
 
 
 
@@ -87,6 +87,9 @@ def send_mass_html_mail(datatuple, context=None, fail_silently=False, user=None,
                                              sender,
                                              [email_adr],
                                              headers=headers)
+            if context is None:
+                context = {}
+            context['pk'] = pk
 
             html_content = get_template(f"{email.html}.html").render(context=context)
             html_email_text = "..."

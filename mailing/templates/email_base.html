@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SLop.-Unsubscribe</title>
+</head>
+<body>
+{% block email_base %}
+{% endblock %}
+
+<a href={% url 'mailing:unsubscribe' subscriber_pk=pk %}>Unsubscribe</a>
+</body>
+</html>
