@@ -13,6 +13,8 @@ from pytracking.django import OpenTrackingView, ClickTrackingView
 
 # Create your views here.
 
+
+
 def thanks_view(request):
     return render(request, 'thanks.html')
 
@@ -120,7 +122,7 @@ class MyOpenTrackingView(OpenTrackingView):
         print('error')
 
     def get_configuration(self):
-        main_site = 'https://6f4ca8b1d675.ngrok.io/'
+        main_site = 'https://15135e24bb9c.ngrok.io/'
         return Configuration(webhook_url=f'{main_site}pixel/webhook/',
                              base_open_tracking_url=f'{main_site}pixel/open/',
                              base_click_tracking_url=f'{main_site}pixel/click/',
@@ -167,7 +169,7 @@ class MyClickTrackingView(ClickTrackingView):
 class UnsubscribeView(View):
 
     def get(self, request, *args, **kwargs):
-        return render(request, 'unsubscribe.html')
+        return render(request, 'unsubscribe/unsubscribe.html')
 
     def post(self, request, *args, **kwargs):
         data = request.POST
@@ -180,4 +182,4 @@ class UnsubscribeView(View):
         else:
             text = "You are still subscribed. have a grate day! "
 
-        return render(request, 'unsubscribe_thanks.html', context={'text': text})
+        return render(request, 'unsubscribe/unsubscribe_thanks.html', context={'text': text})

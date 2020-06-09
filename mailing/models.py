@@ -31,6 +31,8 @@ class Campaign(models.Model):
 
 
 
+
+
 class Email(models.Model):
     STATUS_OPTIONS = (
         ('1', 'on'),

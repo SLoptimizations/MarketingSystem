@@ -5,7 +5,7 @@ from django.template.loader import get_template
 from django.core.mail import get_connection, EmailMultiAlternatives
 from mailing.models import Email, Campaign, Subscriber
 import datetime
-
+from cryptography.fernet import Fernet
 import pytracking
 from pytracking.html import adapt_html
 
@@ -93,12 +93,13 @@ def send_mass_html_mail(datatuple, context=None, fail_silently=False, user=None,
 
             html_content = get_template(f"{email.html}.html").render(context=context)
             html_email_text = "..."
+            key = Fernet.generate_key()
             new_html_email_text = adapt_html(
                 html_content, extra_metadata={"customer_id": pk,"email_pk": email.pk},
-                click_tracking=True, open_tracking=True, base_open_tracking_url=f'{main_site}pixel/open/', base_click_tracking_url=f'{main_site}pixel/click/')
+                click_tracking=False, open_tracking=True, base_open_tracking_url=f'{main_site}pixel/open/', base_click_tracking_url=f'{main_site}pixel/click/')
             message.attach_alternative(new_html_email_text, 'text/html')
             messages.append(message)
-    print('success')
+            print(email_adr)
     return connection.send_messages(messages)
 
 

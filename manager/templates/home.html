@@ -1,0 +1,111 @@
+{% extends "client_base.html" %}
+
+
+{% block content %}
+
+    <!-- Event Details -->
+			<h1>מידע כללי:</h1>
+			<div class="row">
+				<div class="col-md">
+					<div class="card card-body">
+{#						<h5 class="card-title">פרטי האירוע:</h5>#}
+{#						<p>תאריך: {{ event.date }}</p>#}
+{#						<p>מיקום: {{ event.event_location }}</p>#}
+{#                        <p><a class="btn btn-info" href="{% url 'events_health:update-event' pk=event.pk %}" title="ערוך"><i class="far fa-edit"></i></a></p>#}
+
+					</div>
+				</div>
+				<div class="col-md">
+					<div class="card card-body">
+						<div class="row">
+							<div class="col-md">
+								<h5>מספר קמפיינים:</h5>
+								<hr>
+								<br>
+								<h1 style="text-align: center;padding: 10px">{{ campaigns.count }}</h1>
+							</div>
+							<div class="col-md">
+								<h5>מספר רשומים:</h5>
+								<hr>
+								<br>
+								<h1 style="text-align: center;padding: 10px">{{ count_subs }}</h1>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<br>
+			<hr>
+			<h1>קמפיינים:</h1>
+			<!-- search -->
+			<div class="row">
+				<div class="col">
+					<div class="card card-body form-group search-input">
+						<form class="form-inline" method="get">
+							{{ campaigns_filter.form }}
+							<button class="btn btn-outline-info" type="submit">חיפוש</button>
+						</form>
+					</div>
+				</div>
+			</div>
+			<br>
+			<!-- Guests table -->
+			<div class="row">
+				<div class="col-md">
+					<div class="card card-body">
+						<div class="row">
+							<div class="col-md" style="position: relative">
+								<a href="#" class="btn btn-sm btn-primary btn-success" role="button" aria-pressed="true">הפק דו"ח</a>
+{#								<a href="{% url 'events_health:create-guest' pk=event.pk %}" class="btn btn-sm btn-info" role="button" aria-pressed="true" title="הוספת אורח לרשימה">הוספה <i class="fas fa-plus"></i></a>#}
+                            </div>
+
+                            <div class="col-md-2 upload-btn-wrapper">
+                                <a href="" style="position: absolute" class="btn btn-info btn-sm" role="button" aria-pressed="true" title="הוספת אורח לרשימה">העלאת קובץ חדש</a>
+                                <input style="position: absolute;font-size: 13px;width: 30px;" type="file" name="myfile" title="לחץ להעלאת קובץ לקוחות חדש"/>
+                            </div>
+                        </div>
+                    </div>
+						<br>
+						<div class="wrapper-table">
+							<table class="table table-hover">
+								<thead>
+									<tr>
+										<th>קמפיין</th>
+										<th>שם שולח</th>
+										<th>סטטוס</th>
+										<th>רשומים</th>
+										<th>נשלחו</th>
+										<th>נפתחו</th>
+										<th>קליקים</th>
+										<th>ביטלו הרשמה</th>
+										<th>ערוך</th>
+										<th>הסר</th>
+										<th>צפה</th>
+									</tr>
+								</thead>
+								<tbody>
+									{% for campaign in  campaigns %}
+									<tr>
+										<td>{{ campaign.name }}</td>
+										<td>{{ campaign.sender_name }}</td>
+										<td>{{ campaign.status }}</td>
+										<td>{{ campaign.sum_sent }}</td>
+										<td>{{ campaign.sum_opened }}</td>
+										<td>
+
+{#											<a class="btn btn-sm btn-outline-info" href="{% url 'events_health:update-guest' pk=guest.pk %}"> <i class="far fa-edit"></i></a>#}
+										</td>
+										<td>
+											<a class="btn btn-sm btn-outline-danger" href=""><i class="fas fa-trash"></i></a>
+										</td>
+									</tr>
+									{% endfor %}
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+			</div>
+
+
+{% endblock content %}
