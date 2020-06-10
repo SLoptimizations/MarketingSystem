@@ -15,7 +15,7 @@ main_site = ' https://15135e24bb9c.ngrok.io/'
 
 
 # TODO add try , maybe add to subscriber model class
-def handel_mailing(subscriber, index=1, extra_context={}):
+def handel_mailing(subscriber, index=1, extra_context=None):
     """
     :param subscriber:
     :param index: the place of the email in the sending order. default=1 and not 0 in favor of 'zero day' email
@@ -42,6 +42,7 @@ def handel_mailing(subscriber, index=1, extra_context={}):
         email.sent += 1
         email.save()
         subscriber.sent += 1
+        subscriber.save()
         # subscriber.next_email_index = index + 1
 
         # TODO check if no more emails

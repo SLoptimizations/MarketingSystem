@@ -47,9 +47,9 @@ class Email(models.Model):
     delay_H = models.IntegerField(default=0)
     index = models.PositiveIntegerField(default=None, null=True)
     status = models.CharField(max_length=2, choices=STATUS_OPTIONS, default=0)
-    sent = models.IntegerField(default=0)
-    opened = models.IntegerField(default=0)
-    clicked = models.IntegerField(default=0)
+    # sent = models.IntegerField(default=0)
+    # opened = models.IntegerField(default=0)
+    # clicked = models.IntegerField(default=0)
 
     def __str__(self):
         return f"{str(self.index)}-{self.header}"
