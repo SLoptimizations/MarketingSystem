@@ -15,12 +15,12 @@ class Campaign(models.Model):
     name = models.CharField(max_length=60, blank=False)
     sender_name = models.CharField(max_length=60, blank=False)
     sender_email = models.EmailField(max_length=100, blank=False, validators=[EmailValidator])
-    tags = TaggableManager()
+    tags = TaggableManager(blank=True)
     status = models.CharField(max_length=2, choices=STATUS_OPTIONS, default=0)
-    subscribers = models.IntegerField(default=0)
-    unsubscribed = models.IntegerField(default=0)
-    sum_sent = models.IntegerField(default=0)
-    sum_opened = models.IntegerField(default=0)
+    # subscribers = models.IntegerField(default=0)
+    # unsubscribed = models.IntegerField(default=0)
+    # sum_sent = models.IntegerField(default=0)
+    # sum_opened = models.IntegerField(default=0)
 
     def __str__(self):
         return self.name

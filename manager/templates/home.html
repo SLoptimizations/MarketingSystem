@@ -1,4 +1,4 @@
-{% extends "client_base.html" %}
+{% extends "base.html" %}
 {% load render_table from django_tables2 %}
 
 {% block content %}
@@ -6,7 +6,6 @@
     <!-- Event Details -->
 			<h1>מידע כללי:</h1>
 			<div class="row">
-
 				<div class="col-md">
 					<div class="card card-body">
 						<div class="row">
@@ -51,13 +50,11 @@
 						<div class="row">
 							<div class="col-md" style="position: relative">
 								<a href="#" class="btn btn-sm btn-primary btn-success" role="button" aria-pressed="true">הפק דו"ח</a>
-{#								<a href="{% url 'events_health:create-guest' pk=event.pk %}" class="btn btn-sm btn-info" role="button" aria-pressed="true" title="הוספת אורח לרשימה">הוספה <i class="fas fa-plus"></i></a>#}
+								<a href="{% url 'manager:campaign-create'  %}" class="btn btn-sm btn-primary btn-info" role="button" aria-pressed="true">הוסף קמפיין</a>
+{#								<a href="{% url 'mai' pk=event.pk %}" class="btn btn-sm btn-info" role="button" aria-pressed="true" title="הוספת אורח לרשימה">הוספה <i class="fas fa-plus"></i></a>#}
                             </div>
 
-                            <div class="col-md-2 upload-btn-wrapper">
-                                <a href="" style="position: absolute" class="btn btn-info btn-sm" role="button" aria-pressed="true" title="הוספת אורח לרשימה">העלאת קובץ חדש</a>
-                                <input style="position: absolute;font-size: 13px;width: 30px;" type="file" name="myfile" title="לחץ להעלאת קובץ לקוחות חדש"/>
-                            </div>
+
                         </div>
                     </div>
 						<br>
@@ -74,13 +71,13 @@
 										<th>ביטלו הרשמה</th>
 										<th>ערוך</th>
 										<th>הסר</th>
-										<th>צפה</th>
+
 									</tr>
 								</thead>
 								<tbody>
 									{% for campaign in  campaigns %}
 									<tr>
-										<td>{{ campaign.name }}</td>
+										<td><a href="" class="" role="link" aria-pressed="true">{{ campaign.name }}</a></td>
 										<td>{{ campaign.status }}</td>
 										<td>{{ campaign.subs_count }}</td>
 										<td>{{ campaign.sent }}</td>
@@ -90,10 +87,10 @@
 
 										<td>
 
-{#											<a class="btn btn-sm btn-outline-info" href="{% url 'events_health:update-guest' pk=guest.pk %}"> <i class="far fa-edit"></i></a>#}
+											<a class="btn btn-sm btn-outline-info" href="{% url 'manager:campaign-update' pk=campaign.pk %}"> <i class="far fa-edit"></i></a>
 										</td>
 										<td>
-											<a class="btn btn-sm btn-outline-danger" href=""><i class="fas fa-trash"></i></a>
+											<a class="btn btn-sm btn-outline-danger" href="{% url 'manager:campaign-delete' pk=campaign.pk %}"><i class="fas fa-trash"></i></a>
 										</td>
 									</tr>
 									{% endfor %}
@@ -103,7 +100,7 @@
 						</div>
 					</div>
 				</div>
-			</div>
+
 
 
 {% endblock content %}
