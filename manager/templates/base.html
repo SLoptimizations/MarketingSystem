@@ -1,14 +1,14 @@
 <!doctype html>
 {% load static %}
 {% load crispy_forms_tags %}
-{{ form.media }}
-<html lang="en">
+{#{{ form.media }}#}
+<html dir="rtl" lang="he">
 	<head>
 		<meta charset="utf-8">
-		<meta http-equiv="X-UA-Compatible" content="IE=edge">
-		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-		<meta name="description" content="">
-		<meta name="author" content="">
+{#		<meta http-equiv="X-UA-Compatible" content="IE=edge">#}
+{#		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">#}
+{#		<meta name="description" content="">#}
+{#		<meta name="author" content="">#}
 		<title>SLop.-event health</title>
 		<!-- Bootstrap core CSS -->
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
@@ -31,13 +31,22 @@
 	</head>
 	<link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300&family=Varela+Round&display=swap" rel="stylesheet">
 	<body>
+        <!-- Navbar -->
+        <!-- Image and text -->
+            <nav class="navbar navbar-dark bg-dark">
+              <a class="navbar-brand" href="#">
+{#                <img src="https://res.cloudinary.com/slop/image/upload/v1591707485/SLop._pq6jak.png" width="30" height="30" class="d-inline-block align-top" alt="">#}
+                SLop.
+              </a>
+                 <form class="form-inline">
+                    <a  class="btn btn-sm btn-outline-info" href="{% url 'manager:home'%}"> <i class="fas fa-home"></i></a >
+                    <a  class="btn btn-sm btn-outline-info" href="{% url 'manager:home'%}"> <i class="fas fa-bars"></i></a >
+                 </form>
+            </nav>
 		<div class="container">
 			<!-- header -->
 			<header class="blog-header py-3">
-				<a class="blog-header-logo text-dark" href="#">{{ event.partner1 }} &amp; {{ event.partner2 }}</a>
-				<div class="row flex-nowrap justify-content-between align-items-center">
-					<div class="col-4 text-center"></div>
-				</div>
+				<h1>{% block header %}{% endblock %}</h1>
 			</header>
 			<!-- image -->
 		</div>

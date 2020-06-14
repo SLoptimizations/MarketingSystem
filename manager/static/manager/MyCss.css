@@ -1,0 +1,62 @@
+div.field-input input {
+    border-radius: 30px;
+    width: 50%;
+    margin: auto auto 1%;
+    height: 3%;
+}
+
+div.field-input label {
+    font-size: 2vw;
+}
+
+@media (min-width: 320px) and (max-width: 768px) {
+    div.field-input label {
+        font-size: 3.4vw;
+    }
+}
+
+
+h3 {
+    font-size: 2.2vw;
+}
+
+@media (min-width: 320px) and (max-width: 768px) {
+    h3 {
+        font-size: 3.8vw;
+    }
+}
+
+#page-content {
+  flex: 1 0 auto;
+}
+
+#sticky-footer {
+  flex-shrink: none;
+}
+
+
+
+ upload file
+.upload-btn-wrapper {
+  position: relative;
+  overflow: hidden;
+  display: inline-block;
+}
+
+/*.btn {*/
+/*  border: 2px solid gray;*/
+/*  color: gray;*/
+/*  background-color: white;*/
+/*  padding: 8px 20px;*/
+/*  border-radius: 8px;*/
+/*  font-size: 20px;*/
+/*  font-weight: bold;*/
+/*}*/
+
+div.upload-btn-wrapper input[type=file] {
+  font-size: 20px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 100%;
+}

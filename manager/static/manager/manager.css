@@ -1,0 +1,23 @@
+html{
+    direction: rtl;
+}
+body {
+    background-color: lightgray;
+    text-align: right;
+}
+body nav{
+    direction: ltr;
+    text-align: left;
+}
+
+h1,h5,h4{
+    /*direction: rtl;*/
+    text-align: right;
+}
+
+.blog-header {
+    /*line-height: 1;*/
+    /*border-bottom: 1px solid #e5e5e5;*/
+    text-align: right;
+}
+

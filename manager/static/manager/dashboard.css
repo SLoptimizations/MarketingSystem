@@ -1,0 +1,149 @@
+/*---Card---*/
+.card {
+    background-color: rgba(255, 255, 255, 0.58);
+    margin: auto;
+}
+.card h5{
+    text-align: center;
+}
+.card table {
+    /*background-color: white;*/
+}
+
+@media (min-width: 320px) and (max-width: 768px) {
+    .card {
+        margin-bottom: 1%;
+    }
+}
+
+/*---Search---*/
+div.search-input input,
+select {
+    margin: auto auto 1%;
+    border: 2px ;
+    border-radius: 4px;
+
+    /*height: 3%;*/
+}
+
+div.search-input label {
+    /*font-size: 2vw;*/
+    margin: auto auto 1%;
+    /*direction: rtl;*/
+}
+
+div.search-input button {
+    /*-webkit-appearance: none;*/
+    /*-moz-appearance: none;*/
+    appearance: none;
+    margin: auto auto 0.5%;
+    float: right;
+}
+
+@media (min-width: 320px) and (max-width: 768px) {
+    div.search-input input,
+    select,
+    label {
+        /*margin: auto auto 0 auto;*/
+        border: 2px ;
+        border-radius: 4px;
+        direction: rtl;
+        display: inline-block;
+        float: right;
+        width: 50%;
+    }
+
+    div.search-input label {
+    }
+
+    div.search-input button {
+        /*-webkit-appearance: none;*/
+        /*-moz-appearance: none;*/
+        appearance: none;
+        margin: auto;
+        margin-top: 1%;
+        float: left;
+    }
+}
+
+/*---Form---*/
+div.large_input input{
+    width: 30%;
+    border-color: black;
+    margin: auto;
+
+}
+div.large_input input[type=url]{
+
+}
+div.large_input input .btn{
+    width: 10%;
+    margin: auto;
+
+}
+
+
+/*---Table---*/
+.table-hover tbody tr:hover {
+    color: #212529;
+    background-color: white;
+}
+
+table {
+    display: inline-block;
+    width: 100%;
+    height: 400px;
+    overflow-y: scroll;
+    overflow-x: visible ;
+
+    /*border: solid gray 1px;*/
+}
+
+.table-action-btn{
+    position: relative;
+    text-align: left
+}
+
+.table-sm{
+    height: 150px;
+    overflow-y: scroll;
+}
+
+/*---Footer---*/
+.all-browsers {
+    margin: 0;
+    padding: 5px;
+    background-color: lightgray;
+}
+
+.all-browsers > h1,
+.browser {
+    margin: 10px;
+    padding: 5px;
+}
+
+.browser {
+    background: white;
+}
+
+.browser > h2,
+p {
+    margin: 4px;
+    font-size: 90%;
+}
+
+footer {
+    text-align: center;
+    padding: 3px;
+    background-color: DarkSalmon;
+    color: white;
+}
+
+.wrapper-table > table {
+    width: 100%;
+}
+
+/*---Table---*/
+/*table tbody td{*/
+/*    text-align: center;*/
+/*}*/

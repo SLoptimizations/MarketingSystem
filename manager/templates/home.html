@@ -77,7 +77,7 @@
 								<tbody>
 									{% for campaign in  campaigns %}
 									<tr>
-										<td><a href="" class="" role="link" aria-pressed="true">{{ campaign.name }}</a></td>
+										<td><a href="{% url 'manager:campaign' pk=campaign.pk %}" class="" role="link" aria-pressed="true">{{ campaign.name }}</a></td>
 										<td>{{ campaign.status }}</td>
 										<td>{{ campaign.subs_count }}</td>
 										<td>{{ campaign.sent }}</td>
